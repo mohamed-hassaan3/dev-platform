@@ -4,7 +4,7 @@ export {};
 
 declare global {
   type ButtonProps = {
-    className: string;
+    className?: string;
     children: React.ReactNode;
     color?: primary | secondary;
     size?: small | meduim | large;
@@ -15,11 +15,20 @@ declare global {
     post: {
       id: string;
       title: string;
-      slug: string
+      slug: string;
       content: string | null;
+      image: string;
       published: boolean;
       authorId: string;
-    };
+      posts: [];
+      createdAt: string;
+      updateAt: string;
+  }
   };
- 
+  type Posts = {
+    post: PostProps.post
+  }
+ type AllPosts = {
+  posts: Posts[]
+ }
 }

@@ -6,12 +6,16 @@ export default function Home() {
     <div className="font-semibold text-center grid justify-center items-center min-h-screen">
       <h1 className="text-4xl">Hello Prisma Docker and Postgresql </h1>
       <div className="gap-16 flex justify-center items-center">
-        <Button size="large" color="primary" className="text-black">
-          <Link href={`/profile`}>Profile</Link>
-        </Button>
-        <Button size="large" color="primary" className="text-black">
-          <Link href={`/feed`}>Feed</Link>
-        </Button>
+        <Link className="w-full" href={`/profile`}>
+          <Button size="large" color="primary" className="text-black w-full">
+            Profile
+          </Button>
+        </Link>
+        <Link className="w-full" href={`/feed`}>
+          <Button size="large" color="primary" className="text-black w-full">
+            Feed
+          </Button>
+        </Link>
       </div>
     </div>
   );

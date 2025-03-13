@@ -1,4 +1,4 @@
-import { PostForm } from "@/models/PostForm";
+import { PostForm } from "@/modules/PostForm";
 import React from "react";
 
 const Profile = () => {

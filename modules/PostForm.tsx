@@ -1,37 +1,43 @@
 "use client";
-import React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createPost } from "@/actions/PrismaActions";
+import AvatarImg from "@/components/AvatarImg";
 
 export function PostForm() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <p className="text-neutral-600 text-lg max-w-lg mt-2 dark:text-neutral-300 font-bold">
         Create Post
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" action={createPost}>
         <div className="flex gap-6 flex-col space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="title">Title</Label>
-            <Input id="text" placeholder="Add title" type="text" />
+            <Input
+              id="text"
+              placeholder="Add title"
+              type="text"
+              name="title"
+              required
+            />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="message">Description</Label>
-            <Textarea />
+            <Textarea name="content" required />
           </LabelInputContainer>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="picture">Picture</Label>
-            <Input className=" bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input" id="picture" type="file" />
+            <LabelInputContainer>
+              <Label htmlFor="picture">Picture <small className=" italic opacity-85">(required)</small></Label>
+              <AvatarImg />
+            </LabelInputContainer>
           </div>
         </div>
         <button
+        
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
