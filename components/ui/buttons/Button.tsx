@@ -8,6 +8,7 @@ const Button = ({
   className,
   ...props
 }: ButtonProps) => {
+  
   return <button className={`${className} ${size} ${color} Button`} {...props}>{children}</button>;
 };
 
