@@ -12,18 +12,20 @@ model User {
   email    String  @unique
   name     String?
   password String
-  avatar   String?
+  // avatar   String?
   posts    Post[]
 }
 
 model Post {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   title     String
-  slug      String  @unique
-  content   String?
-  image     String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
+  slug      String   @unique
+  content   String
+  image     String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
 
   @@index(slug)
