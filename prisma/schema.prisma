@@ -8,25 +8,37 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  email    String  @unique
+  id       String    @id @default(cuid())
+  email    String    @unique
   name     String?
   password String
-  // avatar   String?
+  avatar   String?
   posts    Post[]
+  comments Comment[]
 }
 
 model Post {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   title     String
-  slug      String   @unique
+  slug      String    @unique
   content   String
   image     String
-  published Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at")
-  updateAt  DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
+  published Boolean   @default(false)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updateAt  DateTime  @updatedAt
+  author    User      @relation(fields: [authorId], references: [id])
   authorId  String
+  comments  Comment[]
 
   @@index(slug)
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updateAt  DateTime @updatedAt
+  Post      Post[]
 }

@@ -23,12 +23,29 @@ declare global {
       posts: [];
       createdAt: string;
       updateAt: string;
-  }
+    };
   };
   type Posts = {
-    post: PostProps.post
-  }
- type AllPosts = {
-  posts: Posts[]
- }
+    post: PostProps.post;
+  };
+  type AllPosts = {
+    posts: Posts[];
+  };
+  type Author = {
+    email: string;
+    name?: string;
+    avatar?: string;
+  };
+
+  type CommentProps = {
+    id: string;
+    author: Author;
+    text: string;
+    createdAt: Date;
+    authorId?: string;
+    avatar?: string;
+  };
+  type CommentsProps = {
+    Comment: CommentProps[];
+  };
 }

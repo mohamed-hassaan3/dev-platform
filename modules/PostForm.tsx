@@ -27,7 +27,7 @@ export function PostForm() {
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="message">Description</Label>
-            <Textarea name="content" required />
+            <Textarea name="content" className="max-h-[200px] min-h-[100px] resize-none" required />
           </LabelInputContainer>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <LabelInputContainer>

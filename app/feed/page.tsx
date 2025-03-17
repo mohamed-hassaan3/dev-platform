@@ -12,6 +12,7 @@ const Feed = async () => {
             select: {
               name: true,
               email: true,
+              avatar: true
             },
           },
         },

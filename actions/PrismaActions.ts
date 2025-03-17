@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { saveFile } from "./uploadFile";
 
+// CREATE POST
 export const createPost = async (formData: FormData): Promise<void> => {
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
@@ -15,7 +16,7 @@ export const createPost = async (formData: FormData): Promise<void> => {
   const file = formData.get("image") as File;
 
   let imageUrl = "";
-    imageUrl = await saveFile(file);
+  imageUrl = await saveFile(file);
 
   try {
     await prisma.post.create({
@@ -24,7 +25,6 @@ export const createPost = async (formData: FormData): Promise<void> => {
         content,
         slug,
         image: imageUrl,
-        createdAt: new Date().toISOString(),
         author: {
           connect: {
             email: userEmail,
@@ -46,3 +46,13 @@ export const createPost = async (formData: FormData): Promise<void> => {
   revalidatePath("/feed");
   redirect("/feed");
 };
+
+// CREATE COMMENT
+/* export const createComment = async (formData: FormData) => {
+  const text = formData.get("text")
+  const comment = await prisma.comment.create({
+    data:{
+      id
+    }
+  })
+} */
