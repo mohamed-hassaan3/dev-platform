@@ -28,17 +28,16 @@ model Post {
   updateAt  DateTime  @updatedAt
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
-  comments  Comment[]
-
-  @@index(slug)
+  comments  Comment[] // A Post can have many Comments
 }
 
 model Comment {
   id        String   @id @default(cuid())
   text      String
+  post      Post     @relation(fields: [postId], references: [id]) // Link to a single Post
+  postId    String   // Foreign key to the Post model
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now()) @map("created_at")
   updateAt  DateTime @updatedAt
-  Post      Post[]
 }

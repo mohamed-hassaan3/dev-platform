@@ -9,11 +9,11 @@ const CommentCard = ({ comment }: { comment: CommentProps }) => {
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(createdAt).fromNow();
   return (
-    <div className="border shadow-lg py-2 px-4 rounded-md">
+    <div className="border shadow-sm py-2 px-4 rounded-md">
       <div className="">
         <Link
           href={`/profile/${id}`}
-          className="flex flex-row items-center space-x-4 truncate z-10"
+          className="flex flex-row items-center space-x-4 truncate z-10 w-fit"
         >
           <Image
             src={author?.avatar || "Avatar"}
