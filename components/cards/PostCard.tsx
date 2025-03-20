@@ -13,7 +13,7 @@ export function PostCard({ post }: Posts) {
     <Link href={`/post/${slug}`} className="max-w-xs w-full group/card">
       <div
         className={cn(
-          "cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4"
+          "cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl max-w-full mx-auto backgroundImage flex flex-col justify-between p-4"
         )}
       >
         <Image
@@ -21,7 +21,7 @@ export function PostCard({ post }: Posts) {
           width={100}
           src={image}
           alt="Post"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "fill" }}
           className="absolute inset-0 w-full h-full"
         />
         <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60"></div>

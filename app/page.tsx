@@ -1,41 +1,51 @@
-import SignupForm from "@/components/signup-form";
-import Button from "@/components/ui/buttons/Button";
 import Link from "next/link";
-import {
-  Sidebar,
-  SidebarBody,
-  SidebarLink,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
-
+import Image from "next/image";
+import { FaGithub } from "react-icons/fa";
+import Button from "@/components/ui/buttons/Button";
 export default function Home() {
   return (
-    <div className="">
-      <SignupForm />
-      {/* <SidebarProvider>
-        <SidebarBody>
-          <Sidebar>
-            <SidebarLink
-              link={{ href: "/profile", label: "Home", icon: <span>🏠</span> }}
-            ></SidebarLink>
-          </Sidebar>
-        </SidebarBody>
-      </SidebarProvider> */}
-
-      
-      {/* <h1 className="text-4xl">Hello Prisma Docker and Postgresql </h1>
-      <div className="gap-16 flex justify-center items-center">
-        <Link className="w-full" href={`/profile`}>
-          <Button size="large" color="primary" className="text-black w-full">
-            Profile
-          </Button>
-        </Link>
-        <Link className="w-full" href={`/feed`}>
-          <Button size="large" color="primary" className="text-black w-full">
-            Feed
-          </Button>
-        </Link>
-      </div> */}
-    </div>
+    <main className="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24 md:p-32 sm:p-8 p-4">
+      <div className="py-6 md:order-1 hidden md:block">
+        <Image
+          src={
+            "https://res.cloudinary.com/dx14mtfkw/image/upload/v1742500127/developer-platform/hero_d8vsct.png"
+          }
+          alt="logo"
+          width={600}
+          height={200}
+          sizes="(max-width: 800px) 100vw, 620px"
+          loading="eager"
+        />
+      </div>
+      <div>
+        <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+          Marketing website done with Astro
+        </h1>
+        <p className="text-lg mt-4 text-slate-600 max-w-xl">
+          Astroship is a starter template for startups, marketing websites &
+          landing pages.
+          <wbr /> Built with Astro.build and TailwindCSS. You can quickly create
+          any website with this starter.
+        </p>
+        <div className="mt-6 flex flex-col sm:flex-row gap-6">
+          <Link
+            href="/signup"
+            className="flex gap-1 items-center justify-center"
+            rel="noopener"
+          >
+            <Button>Get Started</Button>
+          </Link>
+          <Link
+            rel="noopener"
+            href="https://github.com/mohamed-hassaan3/dev-platform"
+            className="flex gap-1 items-center justify-center"
+            target="_blank"
+          >
+            <FaGithub />
+            Github Repo
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 }
