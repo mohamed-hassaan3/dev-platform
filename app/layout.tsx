@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarPage } from "./_components/SidebarPage";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dev-Platform",
-  description: "Dev-Platform if you have a new idea to share with Developers let's grow up together",
+  description:
+    "Dev-Platform if you have a new idea to share with Developers let's grow up together",
 };
 
 export default function RootLayout({
@@ -24,12 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressContentEditableWarning
       >
-        <SidebarPage>{children}</SidebarPage>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarPage>{children}</SidebarPage>
+        </ThemeProvider>
       </body>
     </html>
   );

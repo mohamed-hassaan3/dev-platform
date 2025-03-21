@@ -19,13 +19,12 @@ export default function Home() {
       </div>
       <div>
         <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-          Marketing website done with Astro
+        Welcome to DevPlatform
         </h1>
         <p className="text-lg mt-4 text-slate-600 max-w-xl">
-          Astroship is a starter template for startups, marketing websites &
-          landing pages.
-          <wbr /> Built with Astro.build and TailwindCSS. You can quickly create
-          any website with this starter.
+        Your all-in-one platform to share ideas, connect with developers, and grow your community.
+          <wbr /> Track likes, comments, and engagement effortlessly. You can quickly create
+          any post with this starter.
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-6">
           <Link

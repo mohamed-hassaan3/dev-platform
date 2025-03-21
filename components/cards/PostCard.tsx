@@ -13,7 +13,7 @@ export function PostCard({ post }: Posts) {
     <Link href={`/post/${slug}`} className="max-w-xs w-full group/card">
       <div
         className={cn(
-          "cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl max-w-full mx-auto backgroundImage flex flex-col justify-between p-4"
+          "cursor-pointer overflow-hidden relative card h-96 rounded-md border dark:border-white shadow-xl max-w-full mx-auto backgroundImage flex flex-col justify-between p-4"
         )}
       >
         <Image

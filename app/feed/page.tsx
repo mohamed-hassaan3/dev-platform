@@ -24,9 +24,9 @@ const Feed = async () => {
   });
   console.log(user?.posts);
   return (
-    <div className="w-[100%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0  lg:w-[70%]">
+    <div className="w-[80%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0  lg:w-[50%]">
       <h1 className="mb-8 text-2xl font-bold">Feed</h1>
-      <ul className="grid grid-cols-1  m-auto lg:gap-16 gap-6 justify-center items-center">
+      <ul className="grid grid-cols-1 m-auto lg:gap-16 gap-6 justify-center items-center">
         {user?.posts.length ? (
           user?.posts.map((post) => (
             <li key={post.id}>

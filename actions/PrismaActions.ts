@@ -50,20 +50,19 @@ export const createPost = async (formData: FormData): Promise<void> => {
 // CREATE COMMENT
 export const createComment = async (formData: FormData) => {
   const text = formData.get("text") as string;
-  const slug = formData.get("postId") as string; // Ensure this is the slug of the post
-
+  const slug = formData.get("postId") as string; 
   try {
     await prisma.comment.create({
       data: {
         text,
         post: {
           connect: {
-            slug, // Connect the comment to the post using the slug
+            slug,
           },
         },
         author: {
           connect: {
-            email: "mmhassaan3@gmail.com", // Replace with dynamic user email if needed
+            email: "mmhassaan3@gmail.com", 
           },
         },
       },
@@ -73,5 +72,5 @@ export const createComment = async (formData: FormData) => {
     console.error("Error creating comment:", err);
   }
 
-  revalidatePath(`/post/${slug}`); // Revalidate the specific post page
+  revalidatePath(`/post/${slug}`); 
 };

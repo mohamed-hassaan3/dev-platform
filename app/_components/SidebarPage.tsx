@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export function SidebarPage({ children }: { children: React.ReactNode }) {
   const links = [
@@ -59,6 +60,9 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
                 <SidebarLink key={idx} link={link} />
               ))}
             </div>
+            <div className="mt-3">
+              <ModeToggle />
+            </div>
           </div>
           <div>
             <SidebarLink
@@ -97,7 +101,9 @@ export const Logo = () => {
         width={20}
         height={20}
       />
-      <span className="ml-1">Home</span>
+      <span className="ml-1 bg-neutral-100 text-black dark:bg-neutral-800 dark:text-white">
+        Home
+      </span>
     </Link>
   );
 };
