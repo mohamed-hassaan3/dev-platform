@@ -24,20 +24,24 @@ const AvatarImg = () => {
     hiddenFileInputRef.current!.value = "";
   };
 
-  const triggerFieldInuput = () => {
+  const triggerFieldInput = () => {
     hiddenFileInputRef.current?.click();
   };
 
   return (
-    <div className={`${preview && "h-fit pb-10"} py-1 relative mx-auto w-[100%] rounded-[10px] shadow-[4px_4px_30px_rgba(0,0,0,0.2)] flex flex-col items-center justify-between bg-[rgba(0,110,255,0.041)]`}>
+    <div
+      className={`${
+        preview && "h-fit pb-10"
+      } py-1 relative mx-auto w-[100%] rounded-[10px] shadow-[4px_4px_30px_rgba(0,0,0,0.2)] flex flex-col items-center justify-between bg-[rgba(0,110,255,0.041)] dark:bg-[rgba(0,0,0,0.5)]`}
+    >
       {!preview && (
         <button
           type="button"
-          onClick={triggerFieldInuput}
-          className="cursor-pointer flex-1 w-full border-[#40c9ff] hover:border-[#e81cff] rounded-[10px] flex items-center justify-center flex-col"
+          onClick={triggerFieldInput}
+          className="cursor-pointer flex-1 w-full border-[#40c9ff] hover:border-[#e81cff] rounded-[10px] flex items-center justify-center flex-col dark:border-[#1e90ff] dark:hover:border-red-500"
         >
           <svg
-            className="h-[40px]"
+            className="h-[40px] dark:fill-white"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +59,7 @@ const AvatarImg = () => {
                 strokeWidth="1"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="dark:stroke-white"
               ></path>
             </g>
           </svg>
@@ -64,21 +69,21 @@ const AvatarImg = () => {
         <>
           <Image
             src={preview}
-            className=" w-full h-[200px] object-contain"
+            className="w-full h-[200px] object-contain"
             alt="profilePicture"
             height={50}
             width={50}
           />
           <label
             htmlFor="file"
-            className="w-full h-[40px] p-2 cursor-pointer flex items-center justify-around gap-16 absolute bottom-0"
+            className="w-full h-[40px] p-2 cursor-pointer flex items-center justify-around gap-16 absolute bottom-0 dark:bg-[rgba(0,0,0,0.7)]"
           >
             <svg
-              onClick={triggerFieldInuput}
+              onClick={triggerFieldInput}
               fill="#000000"
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-[130%] fill-[royalblue] bg-[rgba(70,66,66,0.103)] rounded-full p-[2px] cursor-pointer shadow-[0_2px_30px_rgba(0,0,0,0.205)]"
+              className="h-[130%] fill-[royalblue] bg-[rgba(70,66,66,0.103)] rounded-full p-[2px] cursor-pointer shadow-[0_2px_30px_rgba(0,0,0,0.205)] dark:fill-[#1e90ff] dark:bg-[rgba(255,255,255,0.1)]"
             >
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
@@ -93,7 +98,7 @@ const AvatarImg = () => {
             </svg>
             <svg
               onClick={removeImg}
-              className="h-[130%] fill-[royalblue] bg-[rgba(70,66,66,0.103)] rounded-full p-[2px] cursor-pointer shadow-[0_2px_30px_rgba(0,0,0,0.205)]"
+              className="h-[130%] fill-[royalblue] bg-[rgba(70,66,66,0.103)] rounded-full p-[2px] cursor-pointer shadow-[0_2px_30px_rgba(0,0,0,0.205)] dark:fill-red-500 dark:bg-[rgba(255,255,255,0.1)]"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -109,17 +114,20 @@ const AvatarImg = () => {
                   d="M5.16565 10.1534C5.07629 8.99181 5.99473 8 7.15975 8H16.8402C18.0053 8 18.9237 8.9918 18.8344 10.1534L18.142 19.1534C18.0619 20.1954 17.193 21 16.1479 21H7.85206C6.80699 21 5.93811 20.1954 5.85795 19.1534L5.16565 10.1534Z"
                   stroke="#000000"
                   strokeWidth="2"
+                  className="dark:stroke-white"
                 ></path>
                 <path
                   d="M19.5 5H4.5"
                   stroke="#000000"
                   strokeWidth="2"
                   strokeLinecap="round"
+                  className="dark:stroke-white"
                 ></path>
                 <path
                   d="M10 3C10 2.44772 10.4477 2 11 2H13C13.5523 2 14 2.44772 14 3V5H10V3Z"
                   stroke="#000000"
                   strokeWidth="2"
+                  className="dark:stroke-white"
                 ></path>
               </g>
             </svg>

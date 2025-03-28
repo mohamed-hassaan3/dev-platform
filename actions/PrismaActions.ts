@@ -4,6 +4,8 @@ import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { saveFile } from "./uploadFile";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth";
 
 // CREATE POST
 export const createPost = async (formData: FormData): Promise<void> => {
@@ -12,6 +14,10 @@ export const createPost = async (formData: FormData): Promise<void> => {
   const slug = (formData.get("title") as string)
     .replace(/\s+/g, "-")
     .toLowerCase();
+/*   const session = await getServerSession(authConfig);
+  if (!session || !session.user?.email) {
+    throw new Error("You must be signed in to create a post.");
+  } */
   const userEmail = "mmhassaan3@gmail.com";
   const file = formData.get("image") as File;
 
@@ -50,7 +56,13 @@ export const createPost = async (formData: FormData): Promise<void> => {
 // CREATE COMMENT
 export const createComment = async (formData: FormData) => {
   const text = formData.get("text") as string;
-  const slug = formData.get("postId") as string; 
+  const slug = formData.get("postId") as string;
+  const session = await getServerSession(authConfig);
+  const userEmail = session?.user?.email as string;
+
+  if (!session || !session.user?.email) {
+    throw new Error("You must be signed in to create a comment.");
+  }
   try {
     await prisma.comment.create({
       data: {
@@ -62,7 +74,7 @@ export const createComment = async (formData: FormData) => {
         },
         author: {
           connect: {
-            email: "mmhassaan3@gmail.com", 
+            email: userEmail,
           },
         },
       },
@@ -72,5 +84,5 @@ export const createComment = async (formData: FormData) => {
     console.error("Error creating comment:", err);
   }
 
-  revalidatePath(`/post/${slug}`); 
+  revalidatePath(`/post/${slug}`);
 };

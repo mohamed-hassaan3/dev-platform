@@ -1,3 +1,4 @@
+import { DefaultSession } from "next-auth";
 import React from "react";
 
 export {};
@@ -48,4 +49,11 @@ declare global {
   type CommentsProps = {
     Comment: CommentProps[];
   };
+}
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: {
+      id: string;
+    } & DefaultSession["user"];
+  }
 }

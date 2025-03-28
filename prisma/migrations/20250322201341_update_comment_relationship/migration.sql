@@ -38,6 +38,3 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Post_slug_key" ON "Post"("slug");
-
--- CreateIndex
-CREATE INDEX "Post_slug_idx" ON "Post"("slug");

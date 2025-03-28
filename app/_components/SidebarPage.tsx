@@ -1,5 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { ModeToggle } from "@/components/ModeToggle";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -9,10 +12,11 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import { ModeToggle } from "@/components/ModeToggle";
 
 export function SidebarPage({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession(); // Access session data
+  const [open, setOpen] = useState(false);
+
   const links = [
     {
       label: "Feed",
@@ -36,14 +40,15 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
       ),
     },
     {
-      label: "Logout",
-      href: "/",
+      label: session ? "Sign Out" : "Sign In",
+      href: session ? "#" : "/signin",
       icon: (
         <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
+      onClick: session ? () => signOut({ callbackUrl: "/signin" }) : undefined, // Redirect to /signin after sign-out
     },
   ];
-  const [open, setOpen] = useState(false);
+  console.log("Session:", session);
   return (
     <div
       className={cn(
@@ -67,22 +72,27 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
           <div>
             <SidebarLink
               link={{
-                label: "Manu Arora",
-                href: "/profile",
+                label: session?.user?.name || session?.user?.email || "User",
+                href: session ? "#" : "/signin",
                 icon: (
                   <Image
-                    src="https://assets.aceternity.com/manu.png"
+                    src={
+                      session?.user?.image ||
+                      "https://res.cloudinary.com/dx14mtfkw/image/upload/v1742327599/dx14mtfkw/zpygzmfwed3omckmnvbo.webp"
+                    }
                     className="h-7 w-7 shrink-0 rounded-full"
                     width={50}
                     height={50}
                     alt="Avatar"
                   />
                 ),
+                onClick: session ? () => signOut() : undefined,
               }}
             />
           </div>
         </SidebarBody>
       </Sidebar>
+
       {children}
     </div>
   );

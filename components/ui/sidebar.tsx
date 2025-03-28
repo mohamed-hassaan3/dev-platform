@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
 interface Links {
+  onClick?: () => void;
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;

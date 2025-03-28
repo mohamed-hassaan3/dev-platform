@@ -1,34 +1,33 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import { PostCard } from "@/components/cards/PostCard";
+import AuthGuard from "../AuthGuard";
+// import { getServerSession } from "next-auth";
+// import { authConfig, sessionServer } from "@/lib/auth";
+// import { redirect } from "next/navigation";
 
 const Feed = async () => {
-  const user = await prisma.user.findUnique({
-    where: { email: "mmhassaan3@gmail.com" },
+  // await sessionServer();
+  // const session = await getServerSession(authConfig);
+  // if (!session) return redirect("/feed");
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
-      posts: {
-        orderBy: {
-          createdAt: "desc",
-        },
-        include: {
-          author: {
-            select: {
-              name: true,
-              email: true,
-              avatar: true,
-            },
-          },
-        },
-      },
+      author: true,
     },
   });
-  console.log(user?.posts);
+  console.log(posts);
+  // console.log("SESSION", session?.user?.email)
   return (
+    <AuthGuard>
+
     <div className="w-[80%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0  lg:w-[50%]">
       <h1 className="mb-8 text-2xl font-bold">Feed</h1>
       <ul className="grid grid-cols-1 m-auto lg:gap-16 gap-6 justify-center items-center">
-        {user?.posts.length ? (
-          user?.posts.map((post) => (
+        {posts.length ? (
+          posts.map((post) => (
             <li key={post.id}>
               <PostCard post={post} />
             </li>
@@ -40,6 +39,7 @@ const Feed = async () => {
         )}
       </ul>
     </div>
+        </AuthGuard>
   );
 };
 
