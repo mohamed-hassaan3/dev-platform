@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
 import Button from "@/components/ui/buttons/Button";
+import { useSession } from "next-auth/react";
 const Hero = () => {
+  const { status } = useSession();
   return (
     <>
       <div className="py-6 md:order-1 hidden md:block">
@@ -20,16 +22,17 @@ const Hero = () => {
       </div>
       <div>
         <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-        Welcome to DevPlatform
+          Welcome to DevPlatform
         </h1>
         <p className="text-lg mt-4 text-slate-600 max-w-xl">
-        Your all-in-one platform to share ideas, connect with developers, and grow your community.
-          <wbr /> Track likes, comments, and engagement effortlessly. You can quickly create
-          any post with this starter.
+          Your all-in-one platform to share ideas, connect with developers, and
+          grow your community.
+          <wbr /> Track likes, comments, and engagement effortlessly. You can
+          quickly create any post with this starter.
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-6">
           <Link
-            href="/signup"
+            href={status === "authenticated" ? "/feed" : "/signup"}
             className="flex gap-1 items-center justify-center"
             rel="noopener"
           >
@@ -45,9 +48,9 @@ const Hero = () => {
             Github Repo
           </Link>
         </div>
-      </div> 
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

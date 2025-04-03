@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarPage } from "./_components/SidebarPage";
+import { SidebarPage } from "../modules/SidebarModule";
 import { ThemeProvider } from "@/components/theme-provider";
 import AuthProvider from "./AuthProvider";
-import AuthGuard from "./AuthGuard";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,18 +33,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <AuthGuard>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <SidebarPage>{children}</SidebarPage>
-            </ThemeProvider>
-          </AuthGuard>
-        </AuthProvider>
+        <Suspense fallback={<Loading />}>
+          <AuthProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <SidebarPage>{children}</SidebarPage>
+              </ThemeProvider>
+          </AuthProvider>
+        </Suspense>
       </body>
     </html>
   );

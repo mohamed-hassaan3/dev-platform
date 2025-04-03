@@ -1,12 +1,15 @@
 import { PostForm } from "@/modules/PostForm";
 // import ProfileDashboard from "@/modules/ProfileDashboard";
 import React from "react";
+import AuthGuard from "../AuthGuard";
 
 const Profile = () => {
   return (
     <div className="m-auto w-full">
-      {/* <ProfileDashboard /> */}
-      <PostForm />
+      <AuthGuard>
+        {/* <ProfileDashboard /> */}
+        <PostForm />
+      </AuthGuard>
     </div>
   );
 };

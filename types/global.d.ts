@@ -49,6 +49,18 @@ declare global {
   type CommentsProps = {
     Comment: CommentProps[];
   };
+  interface Links {
+    onClick?: () => void;
+    label: string;
+    href: string;
+    icon: React.JSX.Element | React.ReactNode;
+  }
+  
+  interface SidebarContextProps {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    animate: boolean;
+  }
 }
 declare module "next-auth" {
   interface Session extends DefaultSession {
