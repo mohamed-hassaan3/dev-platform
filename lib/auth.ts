@@ -1,30 +1,28 @@
 import { NextAuthOptions } from "next-auth";
-import CredentialsProviders from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import GithhubProvider from "next-auth/providers/github";
-import { prisma } from "./prisma";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GithubProvider from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-
 
 export const authConfig: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
-    CredentialsProviders({
+    CredentialsProvider({
       name: "Signin",
       credentials: {
+        name: {
+          label: "Name",
+          type: "text",
+        },
         email: {
           label: "Email",
-          placeholder: "example@example.com",
           type: "email",
+          placeholder: "example@example.com",
         },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+        password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Missing email or password");
@@ -38,8 +36,10 @@ export const authConfig: NextAuthOptions = {
           throw new Error("User not found or invalid credentials");
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) {
           throw new Error("User not found or invalid credentials");
         }
@@ -51,12 +51,11 @@ export const authConfig: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
-    GithhubProvider({
+    GithubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
-  session: { strategy: "jwt" },
   callbacks: {
     async session({ session, token }) {
       if (token && session.user) {
@@ -65,17 +64,21 @@ export const authConfig: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id as string;
-      }
+      if (user) token.id = user.id;
       return token;
     },
-    async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl + "/feed"; // After login, redirect to /feed
+    redirect({ url, baseUrl }) {
+      const parsedUrl = new URL(url, baseUrl);
+      if (parsedUrl.pathname === "/signin") {
+        return baseUrl + "/feed";
+      }
+      return url.startsWith(baseUrl) ? url : baseUrl + "/feed";
     },
   },
   pages: {
-    signIn: "/signin",
-    newUser: "/signin",
+    signIn: "/",
+    newUser: "/feed",
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: { strategy: "jwt" },
 };

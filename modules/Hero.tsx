@@ -32,7 +32,7 @@ const Hero = () => {
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-6">
           <Link
-            href={status === "authenticated" ? "/feed" : "/signup"}
+            href={status === "authenticated" ? "/feed" : "/signin"}
             className="flex gap-1 items-center justify-center"
             rel="noopener"
           >

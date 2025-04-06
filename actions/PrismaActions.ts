@@ -14,11 +14,12 @@ export const createPost = async (formData: FormData): Promise<void> => {
   const slug = (formData.get("title") as string)
     .replace(/\s+/g, "-")
     .toLowerCase();
-/*   const session = await getServerSession(authConfig);
+  const session = await getServerSession(authConfig);
   if (!session || !session.user?.email) {
     throw new Error("You must be signed in to create a post.");
-  } */
-  const userEmail = "mmhassaan3@gmail.com";
+  }
+  console.log("session", session)
+  const userEmail = session.user?.email;
   const file = formData.get("image") as File;
 
   let imageUrl = "";

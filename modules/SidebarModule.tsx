@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Sidebar, SidebarBody } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/ModeToggle";
 import Image from "next/image";
@@ -9,10 +9,12 @@ import BarLinks from "../components/BarLinks";
 import Logo from "@/components/Logo";
 import LogoIcon from "@/components/LogoIcon";
 import SidebarLink from "@/components/SidebarLink";
+import { useRouter } from "next/navigation";
 
 export function SidebarPage({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
+  const route = useRouter()
   return (
     <div
       className={cn(
@@ -32,7 +34,7 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div>
-            <div onClick={session ? () => signOut() : undefined}>
+            <div onClick={() => route.push('/profile')}>
               <SidebarLink
                 link={{
                   label: session?.user?.name || session?.user?.email || "Login",

@@ -8,25 +8,26 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  userId   String
-  email    String    @unique
-  name     String?
-  password String
-  avatar   String?
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  name          String?
+  password      String?
+  avatar        String?
+
   posts    Post[]
   comments Comment[]
-  Account  Account[]
-  Session  Session[]
+  accounts Account[]
+  sessions Session[]
 }
 
 model Account {
   id                String  @id @default(cuid())
   userId            String
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   type              String
   provider          String
-  providerAccountId String  @unique
+  providerAccountId String
   refresh_token     String?
   access_token      String?
   expires_at        Int?
@@ -34,6 +35,10 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
@@ -43,7 +48,6 @@ model Session {
   expires      DateTime
   sessionToken String   @unique
 }
-
 
 model Post {
   id        String    @id @default(cuid())

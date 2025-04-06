@@ -12,9 +12,9 @@ export function CommentForm({ slug }: { slug: string }) {
     try {
       const formData = new FormData();
       formData.append("text", text);
-      formData.append("postId", slug); // Pass the slug as postId
+      formData.append("postId", slug);
       await createComment(formData);
-      setText(""); // Clear the form after submission
+      setText("");
     } catch (error) {
       console.error("Error creating comment:", error);
     }
@@ -25,7 +25,7 @@ export function CommentForm({ slug }: { slug: string }) {
       <div className="flex flex-col gap-2">
         <label htmlFor="text">Comment</label>
         <textarea
-          className="border rounded-lg min-h-[100px] resize-none p-2"
+          className="border border-gray-700 rounded-lg min-h-[100px] resize-none p-2"
           id="text"
           name="text"
           value={text}
