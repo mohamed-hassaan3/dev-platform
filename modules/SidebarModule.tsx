@@ -14,7 +14,8 @@ import { useRouter } from "next/navigation";
 export function SidebarPage({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
-  const route = useRouter()
+  const route = useRouter();
+
   return (
     <div
       className={cn(
@@ -34,7 +35,7 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div>
-            <div onClick={() => route.push('/profile')}>
+            <div onClick={() => route.push("/profile")}>
               <SidebarLink
                 link={{
                   label: session?.user?.name || session?.user?.email || "Login",
@@ -57,7 +58,7 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
           </div>
         </SidebarBody>
       </Sidebar>
-      {children}
+      <div className="overflow-y-scroll w-full">{children}</div>
     </div>
   );
 }

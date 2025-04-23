@@ -10,7 +10,7 @@ import CommentsField from "@/components/post/CommentsField";
 import { CommentForm } from "@/components/post/CommentForm";
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params; // Get the slug from the URL params
+  const { slug } = await params;
   const post = await prisma.post.findUnique({
     where: {
       slug: slug,
@@ -21,7 +21,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   });
 
   if (!post) {
-    return <p>Post not found</p>; // Handle case where the post is not found
+    return <p>Post not found</p>;
   }
 
   dayjs.extend(relativeTime);
@@ -30,23 +30,29 @@ const page = async ({ params }: { params: { slug: string } }) => {
   return (
     <div className="md:w-[75%] w-[90%] m-auto my-18 flex flex-col gap-8">
       <Image
-        src={post.image || "No Image"}
+        src={
+          post.image ||
+          "https://res.cloudinary.com/dx14mtfkw/image/upload/v1745428783/developer-platform/not-found-post.jpg"
+        }
         height={100}
         width={100}
         alt="post"
         className="w-full h-[500px] object-cover md:object-fill m-auto shadow-lg rounded-lg"
       />
       <h1 className="text-xl font-bold">{post.title}</h1>
-      <div className="flex flex-row items-center space-x-4 truncate z-10">
+      <div className="flex flex-row items-center space-x-4">
         <Image
-          src={post.author.avatar || "No Image"}
+          src={
+            post.author.avatar ||
+            "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
+          }
           height="100"
           width="100"
           alt="Avatar"
           className="h-10 w-10 rounded-full border-2 object-cover"
         />
         <div className="flex flex-col">
-          <p className="font-normal text-base relative z-10">
+          <p className="font-normal text-base relative">
             {post.author.name || post.author.email}
           </p>
           <p className="text-sm text-gray-400">{formattedDate}</p>

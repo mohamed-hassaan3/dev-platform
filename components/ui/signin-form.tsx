@@ -27,7 +27,7 @@ export default function SigninForm() {
 
     if (res?.ok) {
       toast.success("You are successfully logged in");
-      router.push("/feed");
+      setTimeout(() => router.push("/feed"), 1000);
     } else if (error === "OAuthAccountNotLinked") {
       toast.error(
         "Please sign in using the same provider you used when creating the account."
@@ -35,7 +35,7 @@ export default function SigninForm() {
     } else if (res?.error) {
       toast.error(res?.error);
     } else {
-      router.push("/feed")
+      router.push("/feed");
     }
   };
 
@@ -70,6 +70,7 @@ export default function SigninForm() {
         <button
           className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
           type="submit"
+          disabled={email === "" && password === ""}
         >
           Sign in &rarr;
           <BottomGradient />

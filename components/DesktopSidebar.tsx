@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./ui/sidebar";
 import { motion } from "motion/react";
@@ -8,6 +9,7 @@ const DesktopSidebar = ({
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
+
   return (
     <>
       <motion.div

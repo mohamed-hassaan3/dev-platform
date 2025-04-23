@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { BottomGradient, LabelInputContainer } from "./buttons/BottomGradient";
 import Link from "next/link";
 import { IconUser } from "@tabler/icons-react";
+import { toast } from "react-toastify";
 
 export default function SignupForm() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -35,11 +35,11 @@ export default function SignupForm() {
 
     if (!res.ok) {
       const errorData = await res.json();
-      console.error("Signup failed:", errorData);
-      setError(errorData?.error || null);
+      toast.error(errorData?.error || null);
+    } else {
+      toast.success("Congrats, you made it successfully");
+      setTimeout(() => router.push("/signin"), 1000)
     }
-
-    router.push("/signin");
   };
   return (
     <div className="shadow-input mx-auto w-full max-w-md absolute left-1/2 -translate-x-1/2 md:top-1/2 md:-translate-y-1/2 rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
@@ -87,15 +87,7 @@ export default function SignupForm() {
             }
           />
         </LabelInputContainer>
-        {error && (
-          <p className="py-1 my-2 text-center rounded-md opacity-80 text-red-200 bg-red-500 text-xs">
-            {error}
-          </p>
-        )}
-        <button
-          className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-          type="submit"
-        >
+        <button className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]">
           Sign up &rarr;
           <BottomGradient />
         </button>

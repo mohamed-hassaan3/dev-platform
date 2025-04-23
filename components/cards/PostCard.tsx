@@ -27,7 +27,9 @@ export function PostCard({ post }: Posts) {
         <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60"></div>
         <div className="flex flex-row items-center space-x-4 truncate z-10">
           <Image
-            src={image}
+            src={
+              "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
+            }
             height="100"
             width="100"
             alt="Avatar"

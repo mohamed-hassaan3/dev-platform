@@ -12,11 +12,10 @@ const Feed = async () => {
       author: true,
     },
   });
-  console.log(posts);
   return (
     <AuthGuard>
-      <div className="w-[80%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0  lg:w-[50%]">
-        <h1 className="mb-8 text-2xl font-bold">Feed</h1>
+      <div className="w-[80%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0 lg:w-[50%] h-full">
+        <h1 className="mb-8 text-2xl font-bold ">Feed</h1>
         <ul className="grid grid-cols-1 m-auto lg:gap-16 gap-6 justify-center items-center">
           {posts.length ? (
             posts.map((post) => (

@@ -6,7 +6,7 @@ const CommentsField = async ({ slug }: { slug: string }) => {
   const comments = await prisma.comment.findMany({
     where: {
       post: {
-        slug, // Use the slug to filter comments for the specific post
+        slug, 
       },
     },
     orderBy: {

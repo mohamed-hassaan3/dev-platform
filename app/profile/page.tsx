@@ -5,7 +5,7 @@ import AuthGuard from "../AuthGuard";
 
 const Profile = () => {
   return (
-    <div className="m-auto w-full">
+    <div className="w-[80%] m-auto pr-8 pl-8 pb-8 md:pt-8 pt-0 lg:w-[50%] h-full">
       <AuthGuard>
         {/* <ProfileDashboard /> */}
         <PostForm />

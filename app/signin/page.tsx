@@ -5,7 +5,7 @@ const page = () => {
   return (
     <div>
       <div className="absolute to-0">
-        <ToastContainer position="top-center" autoClose={2000} />
+        <ToastContainer position="top-center" autoClose={2000} limit={1} />
       </div>
       <SigninForm />
     </div>

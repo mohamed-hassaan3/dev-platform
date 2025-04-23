@@ -15,7 +15,6 @@ model User {
   name          String?
   password      String?
   avatar        String?
-
   posts    Post[]
   comments Comment[]
   accounts Account[]

@@ -40,8 +40,10 @@ export default function RootLayout({
                 defaultTheme="system"
                 enableSystem
                 disableTransitionOnChange
-              >
-                <SidebarPage>{children}</SidebarPage>
+                >
+                <SidebarPage>
+                  {children}
+                </SidebarPage>
               </ThemeProvider>
           </AuthProvider>
         </Suspense>
