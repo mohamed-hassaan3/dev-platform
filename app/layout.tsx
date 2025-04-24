@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import AuthProvider from "./AuthProvider";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,16 +36,17 @@ export default function RootLayout({
       >
         <Suspense fallback={<Loading />}>
           <AuthProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-                >
-                <SidebarPage>
-                  {children}
-                </SidebarPage>
-              </ThemeProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarPage>
+                {children}
+                <Analytics />
+              </SidebarPage>
+            </ThemeProvider>
           </AuthProvider>
         </Suspense>
       </body>
