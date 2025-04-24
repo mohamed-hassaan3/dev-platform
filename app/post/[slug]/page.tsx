@@ -8,6 +8,7 @@ import { AiFillLike } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import CommentsField from "@/components/post/CommentsField";
 import { CommentForm } from "@/components/post/CommentForm";
+import Link from "next/link";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
@@ -40,7 +41,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         className="w-full h-[500px] object-cover md:object-fill m-auto shadow-lg rounded-lg"
       />
       <h1 className="text-xl font-bold">{post.title}</h1>
-      <div className="flex flex-row items-center space-x-4">
+      <Link href={`/userProfile/${post.authorId}`} className="flex flex-row items-center space-x-4">
         <Image
           src={
             post.author.avatar ||
@@ -57,7 +58,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </p>
           <p className="text-sm text-gray-400">{formattedDate}</p>
         </div>
-      </div>
+      </Link>
       <h1>{post.content}</h1>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-1">

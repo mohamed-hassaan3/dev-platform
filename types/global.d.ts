@@ -39,7 +39,6 @@ declare global {
   };
 
   type CommentProps = {
-    id: string;
     author: Author;
     text: string;
     createdAt: Date;

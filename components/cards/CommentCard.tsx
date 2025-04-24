@@ -5,7 +5,7 @@ import React from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 const CommentCard = ({ comment }: { comment: CommentProps }) => {
-  const { id, text, author, createdAt } = comment;
+  const { text, author, createdAt, authorId } = comment;
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(createdAt).fromNow();
   
@@ -13,7 +13,7 @@ const CommentCard = ({ comment }: { comment: CommentProps }) => {
     <div className="border shadow-sm py-2 px-4 rounded-md border-gray-400 dark:border-gray-600">
       <div className="">
         <Link
-          href={`/userProfile/${id}`}
+          href={`/userProfile/${authorId}`}
           className="flex flex-row items-center space-x-4 truncate  w-fit"
         >
           <Image
