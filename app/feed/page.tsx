@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { PostCard } from "@/components/cards/PostCard";
 import AuthGuard from "../AuthGuard";
 
-const Feed = async () => {
+const page = async () => {
   const posts = await prisma.post.findMany({
     orderBy: {
       createdAt: "desc",
@@ -34,4 +34,4 @@ const Feed = async () => {
   );
 };
 
-export default Feed;
+export default page;

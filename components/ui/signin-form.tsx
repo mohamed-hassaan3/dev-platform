@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
 import { GithubButton, GoogleButton } from "./buttons/AuthButton";
 import { BottomGradient, LabelInputContainer } from "./buttons/BottomGradient";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { IconUser } from "@tabler/icons-react";
 import { toast } from "react-toastify";
@@ -14,8 +14,6 @@ export default function SigninForm() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +26,6 @@ export default function SigninForm() {
     if (res?.ok) {
       toast.success("You are successfully logged in");
       setTimeout(() => router.push("/feed"), 1000);
-    } else if (error === "OAuthAccountNotLinked") {
-      toast.error(
-        "Please sign in using the same provider you used when creating the account."
-      );
     } else if (res?.error) {
       toast.error(res?.error);
     } else {

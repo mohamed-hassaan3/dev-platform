@@ -1,7 +1,10 @@
 import { prisma } from "@/lib/prisma";
 
-const page = async ({ params }: { params: { userID: string } }) => {
-  const userID = params.userID;
+interface UserProps {
+  params: Promise<{userID: string}>
+}
+const page = async ({ params }:  UserProps ) => {
+  const userID = (await params).userID;
   const user = await prisma.user.findUnique({
     where: {
       id: userID,

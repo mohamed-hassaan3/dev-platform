@@ -10,8 +10,13 @@ import CommentsField from "@/components/post/CommentsField";
 import { CommentForm } from "@/components/post/CommentForm";
 import Link from "next/link";
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = await params;
+interface PostPageProps {
+  params: Promise<{ slug: string }>; 
+}
+
+const page = async ({ params }: PostPageProps) => {
+  const { slug } = await params; 
+
   const post = await prisma.post.findUnique({
     where: {
       slug: slug,
@@ -22,7 +27,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
   });
 
   if (!post) {
-    return <p>Post not found</p>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold text-red-500">Post not found</p>
+      </div>
+    );
   }
 
   dayjs.extend(relativeTime);
@@ -35,20 +44,23 @@ const page = async ({ params }: { params: { slug: string } }) => {
           post.image ||
           "https://res.cloudinary.com/dx14mtfkw/image/upload/v1745428783/developer-platform/not-found-post.jpg"
         }
-        height={100}
-        width={100}
+        height={500}
+        width={1000}
         alt="post"
         className="w-full h-[500px] object-cover md:object-fill m-auto shadow-lg rounded-lg"
       />
       <h1 className="text-xl font-bold">{post.title}</h1>
-      <Link href={`/userProfile/${post.authorId}`} className="flex flex-row items-center space-x-4">
+      <Link
+        href={`/userProfile/${post.authorId}`}
+        className="flex flex-row items-center space-x-4"
+      >
         <Image
           src={
             post.author.avatar ||
             "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
           }
-          height="100"
-          width="100"
+          height={40}
+          width={40}
           alt="Avatar"
           className="h-10 w-10 rounded-full border-2 object-cover"
         />
@@ -59,7 +71,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <p className="text-sm text-gray-400">{formattedDate}</p>
         </div>
       </Link>
-      <h1>{post.content}</h1>
+      <p className="text-base">{post.content}</p>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-1">
           <Button
@@ -74,7 +86,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
             <FaComment />
           </Button>
         </div>
-        {/* Pass the slug to both CommentForm and CommentsField */}
         <CommentForm slug={slug} />
         <CommentsField slug={slug} />
       </div>
