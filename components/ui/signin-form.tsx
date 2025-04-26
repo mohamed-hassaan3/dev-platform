@@ -28,8 +28,6 @@ export default function SigninForm() {
       setTimeout(() => router.push("/feed"), 1000);
     } else if (res?.error) {
       toast.error(res?.error);
-    } else {
-      router.push("/feed");
     }
   };
 

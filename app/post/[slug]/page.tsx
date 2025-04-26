@@ -56,7 +56,7 @@ const page = async ({ params }: PostPageProps) => {
       >
         <Image
           src={
-            post.author.avatar ||
+            post.author.image ||
             "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
           }
           height={40}

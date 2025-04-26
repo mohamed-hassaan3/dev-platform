@@ -44,7 +44,7 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
                     <Image
                       src={
                         session?.user?.image ||
-                        "https://res.cloudinary.com/dx14mtfkw/image/upload/v1742327599/dx14mtfkw/zpygzmfwed3omckmnvbo.webp"
+                        "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
                       }
                       className="h-7 w-7 shrink-0 rounded-full"
                       width={50}

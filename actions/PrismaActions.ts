@@ -15,10 +15,10 @@ export const createPost = async (formData: FormData): Promise<void> => {
     .replace(/\s+/g, "-")
     .toLowerCase();
   const session = await getServerSession(authConfig);
+
   if (!session || !session.user?.email) {
     throw new Error("You must be signed in to create a post.");
   }
-  console.log("session", session)
   const userEmail = session.user?.email;
   const file = formData.get("image") as File;
 
@@ -47,9 +47,7 @@ export const createPost = async (formData: FormData): Promise<void> => {
         );
       }
     }
-    console.error("Error creating post:", error);
   }
-
   revalidatePath("/feed");
   redirect("/feed");
 };
@@ -80,9 +78,8 @@ export const createComment = async (formData: FormData) => {
         },
       },
     });
-    console.log("Comment created successfully for post:", slug);
   } catch (err) {
-    console.error("Error creating comment:", err);
+    throw new Error(`Error creating comment: ${String(err)}`);
   }
 
   revalidatePath(`/post/${slug}`);
