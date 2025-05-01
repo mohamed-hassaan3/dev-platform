@@ -11,6 +11,7 @@ declare global {
     size?: small | meduim | large;
     disabled?: boolean;
     type?: "reset" | "submit" | "button" | undefined;
+    onClick?: () => void
   };
   type PostProps = {
     post: {

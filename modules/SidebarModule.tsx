@@ -40,11 +40,21 @@ export function SidebarPage({ children }: { children: React.ReactNode }) {
                 link={{
                   label: session?.user?.name || session?.user?.email || "Login",
                   href: session ? "/" : "/signin",
-                  icon: (
+                  icon: session ? (
                     <Image
                       src={
                         session?.user?.image ||
                         "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1741642055/developer-platform/coding_prwarh.png"
+                      }
+                      className="h-7 w-7 shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ) : (
+                    <Image
+                      src={
+                        "https://res.cloudinary.com/dx14mtfkw/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1745744944/developer-platform/unknown-Img_jpuycx.webp"
                       }
                       className="h-7 w-7 shrink-0 rounded-full"
                       width={50}

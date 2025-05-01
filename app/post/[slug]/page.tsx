@@ -3,20 +3,19 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Button from "@/components/ui/buttons/Button";
-import { AiFillLike } from "react-icons/ai";
-import { FaComment } from "react-icons/fa";
 import CommentsField from "@/components/post/CommentsField";
 import { CommentForm } from "@/components/post/CommentForm";
 import Link from "next/link";
+import LikesButton from "@/components/post/LikesButton";
+import { getLikes } from "@/actions/PrismaActions";
 
 interface PostPageProps {
-  params: Promise<{ slug: string }>; 
+  params: Promise<{ slug: string }>;
 }
 
 const page = async ({ params }: PostPageProps) => {
-  const { slug } = await params; 
-
+  const { slug } = await params;
+  const initialLikes = await getLikes(slug);
   const post = await prisma.post.findUnique({
     where: {
       slug: slug,
@@ -74,17 +73,7 @@ const page = async ({ params }: PostPageProps) => {
       <p className="text-base">{post.content}</p>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-1">
-          <Button
-            size="meduim"
-            color="primary"
-            className="flex items-center gap-1"
-          >
-            <AiFillLike />
-            <small>527</small>
-          </Button>
-          <Button size="meduim" color="primary" className="!px-12">
-            <FaComment />
-          </Button>
+          <LikesButton slug={slug} initialLikes={initialLikes} />
         </div>
         <CommentForm slug={slug} />
         <CommentsField slug={slug} />
