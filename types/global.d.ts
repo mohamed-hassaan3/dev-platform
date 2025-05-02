@@ -11,7 +11,7 @@ declare global {
     size?: small | meduim | large;
     disabled?: boolean;
     type?: "reset" | "submit" | "button" | undefined;
-    onClick?: () => void
+    onClick?: () => void;
   };
   type PostProps = {
     post: {
@@ -55,13 +55,18 @@ declare global {
     href: string;
     icon: React.JSX.Element | React.ReactNode;
   }
-  
+
   interface SidebarContextProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     animate: boolean;
   }
+  interface LikesState {
+    count: number;
+    userHasLiked: boolean;
+  }
 }
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {

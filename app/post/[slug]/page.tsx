@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import CommentsField from "@/components/post/CommentsField";
 import { CommentForm } from "@/components/post/CommentForm";
 import Link from "next/link";
-import LikesButton from "@/components/post/LikesButton";
+import LikesButton from "@/components/post/LikeButton";
 import { getLikes } from "@/actions/PrismaActions";
 
 interface PostPageProps {
@@ -24,6 +24,7 @@ const page = async ({ params }: PostPageProps) => {
       author: true,
     },
   });
+  console.log("initialLikes", initialLikes)
 
   if (!post) {
     return (

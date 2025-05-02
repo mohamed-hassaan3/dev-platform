@@ -87,22 +87,22 @@ export const createComment = async (formData: FormData) => {
 
 // CREATE LIKE
 export const toggleLike = async (formData: FormData) => {
-  const postId = formData.get("slug") as string;
+  const slug = formData.get('slug') as string;
   const session = await getServerSession(authConfig);
-  const userEmail = session?.user?.email as string;
 
-  if (!session || !userEmail) {
-    throw new Error("You must be signed in to like a post.");
+  if (!session?.user?.email) {
+    throw new Error('Unauthorized');
   }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email: userEmail } });
-    const post = await prisma.post.findUnique({ where: { slug: postId } });
-
-    if (!user || !post) throw new Error("Invalid user or post");
+    const post = await prisma.post.findUnique({ where: { slug } });
+    if (!post) throw new Error('Post not found');
 
     const existingLike = await prisma.like.findFirst({
-      where: { authorId: user.id, postId: post.id },
+      where: {
+        postId: post.id,
+        author: { email: session.user.email }
+      }
     });
 
     if (existingLike) {
@@ -110,42 +110,50 @@ export const toggleLike = async (formData: FormData) => {
     } else {
       await prisma.like.create({
         data: {
-          author: { connect: { id: user.id } },
-          post: { connect: { id: post.id } },
-        },
+          postId: post.id,
+          authorId: (await prisma.user.findUnique({ 
+            where: { email: session.user.email } 
+          }))!.id
+        }
       });
     }
 
-    const count = await prisma.like.count({
-      where: { postId: post.id },
-    });
-
-    const userHasLiked = !existingLike;
-
-    return { count, userHasLiked };
-  } catch (err) {
-    throw new Error(`Error toggling like: ${String(err)}`);
+    revalidatePath(`/post/${slug}`);
+  } catch (error) {
+    console.error('Like action failed:', error);
+    throw error;
   }
 };
 
 // COUNT LIKES
-export const getLikes = async (postId: string) => {
+export const getLikes = async (slug: string) => {
   const session = await getServerSession(authConfig);
-  const userEmail = session?.user?.email as string | undefined;
 
   try {
-    const count = await prisma.like.count({ where: { postId } });
+    const post = await prisma.post.findUnique({
+      where: { slug },
+      select: { id: true }
+    });
+    if (!post) return { count: 0, userHasLiked: false };
 
-    let userHasLiked = false;
-    if (userEmail) {
-      userHasLiked = !!(await prisma.like.findFirst({
-        where: { postId, author: { email: userEmail } },
-      }));
-    }
+    const [count, userLike] = await Promise.all([
+      prisma.like.count({ where: { postId: post.id } }),
+      session?.user?.email 
+        ? prisma.like.findFirst({
+            where: {
+              postId: post.id,
+              author: { email: session.user.email }
+            }
+          })
+        : null
+    ]);
 
-    return { count, userHasLiked };
-  } catch (err) {
-    console.error("Error fetching likes:", err);
+    return { 
+      count,
+      userHasLiked: !!userLike 
+    };
+  } catch (error) {
+    console.error('Failed to fetch likes:', error);
     return { count: 0, userHasLiked: false };
   }
 };

@@ -15,15 +15,13 @@ const CommentsField = async ({ slug }: { slug: string }) => {
     include: {
       author: {
         select: {
-          avatar: true,
+          image: true,
           email: true,
           name: true,
         },
       },
     },
   });
-
-  console.log("Comments for post:", slug, comments);
 
   return (
     <div className="border space-y-4 max-h-[2000px] min-h-[500px] w-full rounded-lg p-4 overflow-y-scroll overflow-hidden">
@@ -36,7 +34,7 @@ const CommentsField = async ({ slug }: { slug: string }) => {
                 author: {
                   ...comment.author,
                   name: comment.author.name ?? undefined,
-                  avatar: comment.author.avatar ?? undefined,
+                  avatar: comment.author.image ?? undefined,
                 },
               }}
             />

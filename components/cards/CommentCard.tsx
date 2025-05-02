@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ReadMore from "../ui/buttons/ReadMore";
 
 const CommentCard = ({ comment }: { comment: CommentProps }) => {
   const { text, author, createdAt, authorId } = comment;
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(createdAt).fromNow();
-  
+
   return (
     <div className="border shadow-sm py-2 px-4 rounded-md border-gray-400 dark:border-gray-600">
       <div className="">
@@ -37,9 +38,7 @@ const CommentCard = ({ comment }: { comment: CommentProps }) => {
         </Link>
       </div>
       <div className="text content">
-        <p className="font-normal text-sm text-gray-800 dark:text-gray-400 relative  my-4 line-clamp-3">
-          {text}
-        </p>
+        <ReadMore>{text}</ReadMore>
       </div>
     </div>
   );

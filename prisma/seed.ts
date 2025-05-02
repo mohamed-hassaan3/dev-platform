@@ -6,66 +6,6 @@ const initialPost: Prisma.PostCreateInput[] = [
     title: "First Post",
     slug: "first-post",
     content: "I'm a First Post ever on that App",
-    likes: {
-      create: [
-        {
-          author: {
-            connectOrCreate: {
-              where: { email: "mmhassaan3@gmail.com" },
-              create: {
-                avatar:
-                  "https://res.cloudinary.com/dx14mtfkw/image/upload/v1741633510/developer-platform/banner_sneuet.webp",
-                email: "mmhassaan3@gmail.com",
-                name: "Mohamed Hassaan",
-                password: "123456",
-              },
-            },
-          },
-        },
-        {
-          author: {
-            connectOrCreate: {
-              where: { email: "mmhassaan3@gmail.com" },
-              create: {
-                avatar:
-                  "https://res.cloudinary.com/dx14mtfkw/image/upload/v1741633510/developer-platform/banner_sneuet.webp",
-                email: "mmhassaan3@gmail.com",
-                name: "Mohamed Hassaan",
-                password: "123456",
-              },
-            },
-          },
-        },
-        {
-          author: {
-            connectOrCreate: {
-              where: { email: "mmhassaan3@gmail.com" },
-              create: {
-                avatar:
-                  "https://res.cloudinary.com/dx14mtfkw/image/upload/v1741633510/developer-platform/banner_sneuet.webp",
-                email: "mmhassaan3@gmail.com",
-                name: "Mohamed Hassaan",
-                password: "123456",
-              },
-            },
-          },
-        },
-        {
-          author: {
-            connectOrCreate: {
-              where: { email: "mmhassaan3@gmail.com" },
-              create: {
-                avatar:
-                  "https://res.cloudinary.com/dx14mtfkw/image/upload/v1741633510/developer-platform/banner_sneuet.webp",
-                email: "mmhassaan3@gmail.com",
-                name: "Mohamed Hassaan",
-                password: "123456",
-              },
-            },
-          },
-        },
-      ],
-    },
     comments: {
       connectOrCreate: [
         {
