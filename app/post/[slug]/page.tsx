@@ -24,7 +24,6 @@ const page = async ({ params }: PostPageProps) => {
       author: true,
     },
   });
-  console.log("initialLikes", initialLikes)
 
   if (!post) {
     return (

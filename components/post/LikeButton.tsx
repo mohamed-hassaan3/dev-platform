@@ -27,7 +27,7 @@ const LikeButton = ({
     formData.append("slug", slug);
     await toggleLike(formData);
   };
-  console.log("object", likes)
+
   return (
     <form action={handleLike}>
       <Button
