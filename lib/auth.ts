@@ -41,7 +41,7 @@ export const authConfig: NextAuthOptions = {
           user.password
         );
         if (!isValid) {
-          throw new Error("User not found or invalid credentials");
+          throw new Error("Incorrect Password | could Sign with providers ");
         }
 
         return user;
