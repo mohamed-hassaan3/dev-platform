@@ -26,8 +26,8 @@ export default function SigninForm() {
     if (res?.ok) {
       toast.success("You are successfully logged in");
       setTimeout(() => router.push("/feed"), 1000);
-    } else if (res?.error) {
-      toast.error(res?.error);
+    } else if (res?.status == 500) {
+      toast.error( "Server Error");
     }
   };
 
