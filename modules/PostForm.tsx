@@ -5,15 +5,34 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createPost } from "@/actions/PrismaActions";
 import AvatarImg from "@/components/AvatarImg";
+import React, { useState, useTransition } from "react";
 
 export function PostForm() {
+  const [isPending, startTransition] = useTransition();
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const handleSubmit = async (formData: FormData) => {
+    setFormError(null);
+    startTransition(async () => {
+      try {
+        await createPost(formData);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to create post.";
+        setFormError(errorMessage);
+      }
+    });
+  };
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <p className="text-neutral-600 text-lg max-w-lg mt-2 dark:text-neutral-300 font-bold">
         Create Post
       </p>
 
-      <form className="my-8" action={createPost}>
+      <form
+        className="my-8"
+        action={handleSubmit}
+      >
         <div className="flex gap-6 flex-col space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="title">Title</Label>
@@ -36,12 +55,15 @@ export function PostForm() {
             </LabelInputContainer>
           </div>
         </div>
+        {formError && (
+          <div className="text-red-500 text-sm mb-2">{formError}</div>
+        )}
         <button
-        
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
+          disabled={isPending}
         >
-          Create Post
+          {isPending ? "Posting..." : "Create Post"}
           <BottomGradient />
         </button>
       </form>

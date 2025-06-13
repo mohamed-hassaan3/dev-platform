@@ -4,11 +4,22 @@ import React, { useRef, useState } from "react";
 
 const AvatarImg = () => {
   const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const hiddenFileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const MAX_SIZE_MB = 1;
+
   const handleImgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+        setError(`Image size must be less than ${MAX_SIZE_MB}MB.`);
+        setPreview(null);
+        event.target.value = "";
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string);
@@ -21,6 +32,7 @@ const AvatarImg = () => {
 
   const removeImg = () => {
     setPreview(null);
+    setError(null);
     hiddenFileInputRef.current!.value = "";
   };
 
@@ -134,6 +146,7 @@ const AvatarImg = () => {
           </label>
         </>
       )}
+      {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
       <input
         ref={hiddenFileInputRef}
         hidden
