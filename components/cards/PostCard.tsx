@@ -4,7 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-export function PostCard({ post }: Posts) {
+import { Prisma } from "@prisma/client";
+
+type PostWithAuthor = Prisma.PostGetPayload<{
+  include: { author: true };
+}>;
+
+export function PostCard({ post }: { post: PostWithAuthor }) {
   const { content, title, author, slug, createdAt, image } = post;
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(createdAt).fromNow();

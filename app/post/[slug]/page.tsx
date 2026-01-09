@@ -15,10 +15,13 @@ interface PostPageProps {
 
 const page = async ({ params }: PostPageProps) => {
   const { slug } = await params;
-  const initialLikes = await getLikes(slug);
+  
+  // Decode the slug in case it's URL encoded
+  const decodedSlug = decodeURIComponent(slug);
+  
   const post = await prisma.post.findUnique({
     where: {
-      slug: slug,
+      slug: decodedSlug,
     },
     include: {
       author: true,
@@ -26,12 +29,23 @@ const page = async ({ params }: PostPageProps) => {
   });
 
   if (!post) {
+    // Debug: Log available slugs to help diagnose
+    const allPosts = await prisma.post.findMany({
+      select: { slug: true, title: true },
+      take: 10,
+    });
+    console.log("Looking for slug:", decodedSlug);
+    console.log("Available slugs:", allPosts.map((p: { slug: string; title: string }) => p.slug));
+    
     return (
       <div className="flex items-center justify-center h-screen">
         <p className="text-lg font-semibold text-red-500">Post not found</p>
+        <p className="text-sm text-gray-500 mt-2">Slug: {decodedSlug}</p>
       </div>
     );
   }
+  
+  const initialLikes = await getLikes(decodedSlug);
 
   dayjs.extend(relativeTime);
   const formattedDate = dayjs(post.createdAt).fromNow();
@@ -73,10 +87,10 @@ const page = async ({ params }: PostPageProps) => {
       <p className="text-base">{post.content}</p>
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-1">
-          <LikesButton slug={slug} initialLikes={initialLikes} />
+          <LikesButton slug={decodedSlug} initialLikes={initialLikes} />
         </div>
-        <CommentForm slug={slug} />
-        <CommentsField slug={slug} />
+        <CommentForm slug={decodedSlug} />
+        <CommentsField slug={decodedSlug} />
       </div>
     </div>
   );
