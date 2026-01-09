@@ -1,1 +1,17 @@
-npm test
+#!/usr/bin/env sh
+# . "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+echo ""
+
+# Run quick checks before commit (fast checks only)
+npm run check
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Pre-commit checks failed! Please fix the errors above before committing."
+  exit 1
+fi
+
+echo ""
+echo "✅ Pre-commit checks passed!"
