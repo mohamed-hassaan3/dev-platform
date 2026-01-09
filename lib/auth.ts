@@ -4,7 +4,6 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
 
 export const authConfig: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -36,6 +35,8 @@ export const authConfig: NextAuthOptions = {
           throw new Error("User not found or invalid credentials");
         }
 
+        // Dynamically import bcrypt to avoid loading native module during build
+        const bcrypt = (await import("bcrypt")).default;
         const isValid = await bcrypt.compare(
           credentials.password,
           user.password

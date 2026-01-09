@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
+
+// Ensure this route is dynamic (not statically analyzed during build)
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
+    // Dynamically import bcrypt to avoid loading native module during build
+    const bcrypt = (await import("bcrypt")).default;
+    
     const body = await req.json();
     const { email, password, name } = body;
 
